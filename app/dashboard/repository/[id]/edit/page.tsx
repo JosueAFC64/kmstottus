@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { id } = await params;
   const doc = await getDocumentById(id);
   if (!doc) return { title: 'Documento no encontrado' };
-  return { title: `Editar: ${doc.title} — KMS Tottus` };
+  return { title: `Editar: ${doc.title} — KMS Papa Johns` };
 }
 
 export default async function EditDocumentPage({ params }: PageProps) {
@@ -58,7 +58,7 @@ export default async function EditDocumentPage({ params }: PageProps) {
         </Link>
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-[#212529] flex items-center gap-2">
-            <Icon.Cog className="w-7 h-7 text-[#00a651]" />
+            <Icon.Cog className="w-7 h-7 text-[#1a472a]" />
             Editar Documento
           </h1>
           <p className="text-sm text-[#868e96] mt-1 truncate max-w-xl">

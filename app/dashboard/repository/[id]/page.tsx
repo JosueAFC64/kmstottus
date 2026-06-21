@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const doc = await getDocumentById(id);
   if (!doc) return { title: 'Documento no encontrado' };
   return {
-    title: `${doc.title} — KMS Tottus`,
+    title: `${doc.title} — KMS Papa Johns`,
     description: doc.summary,
   };
 }
@@ -74,7 +74,7 @@ function renderMarkdown(content: string): string {
     // Negrita
     .replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-[#212529]">$1</strong>')
     // Citas
-    .replace(/^> (.+)$/gm, '<blockquote class="border-l-4 border-[#00a651] pl-4 py-2 my-4 text-[#495057] italic bg-[#f8f9fa] rounded-r-lg">$1</blockquote>')
+    .replace(/^> (.+)$/gm, '<blockquote class="border-l-4 border-[#1a472a] pl-4 py-2 my-4 text-[#495057] italic bg-[#f8f9fa] rounded-r-lg">$1</blockquote>')
     // Separadores
     .replace(/^---$/gm, '<hr class="my-6 border-[#dee2e6]" />')
     // Párrafos 
@@ -104,14 +104,14 @@ export default async function DocumentDetailPage({ params }: PageProps) {
     <div className="max-w-5xl mx-auto">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-[#868e96] mb-6">
-        <Link href="/dashboard/repository" className="hover:text-[#00a651] flex items-center gap-1">
+        <Link href="/dashboard/repository" className="hover:text-[#1a472a] flex items-center gap-1">
           <Icon.Repository className="w-4 h-4" />
           Repositorio
         </Link>
         <span>/</span>
         <span
           className="text-sm px-2 py-0.5 rounded-full text-white font-medium"
-          style={{ backgroundColor: doc.category.color || '#00a651' }}
+          style={{ backgroundColor: doc.category.color || '#1a472a' }}
         >
           {doc.category.name}
         </span>
@@ -203,7 +203,7 @@ export default async function DocumentDetailPage({ params }: PageProps) {
               style={{
                 '--tw-prose-body': '#495057',
                 '--tw-prose-headings': '#212529',
-                '--tw-prose-links': '#00a651',
+                '--tw-prose-links': '#1a472a',
               } as React.CSSProperties}
               dangerouslySetInnerHTML={{ __html: htmlContent }}
             />
@@ -224,7 +224,7 @@ export default async function DocumentDetailPage({ params }: PageProps) {
                   <Link
                     key={tag}
                     href={`/dashboard/repository?tags=${encodeURIComponent(tag)}`}
-                    className="px-2.5 py-1 bg-[#f1f3f5] text-[#495057] text-xs rounded-full hover:bg-[#00a651] hover:text-white transition-colors"
+                    className="px-2.5 py-1 bg-[#f1f3f5] text-[#495057] text-xs rounded-full hover:bg-[#1a472a] hover:text-white transition-colors"
                   >
                     {tag}
                   </Link>
@@ -247,20 +247,20 @@ export default async function DocumentDetailPage({ params }: PageProps) {
                     href={att.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-2.5 rounded-lg border border-[#dee2e6] hover:border-[#00a651] hover:bg-[#f8f9fa] transition-colors group"
+                    className="flex items-center gap-3 p-2.5 rounded-lg border border-[#dee2e6] hover:border-[#1a472a] hover:bg-[#f8f9fa] transition-colors group"
                   >
                     <div className="w-9 h-9 bg-[#f1f3f5] group-hover:bg-[#d4edda] rounded-lg flex items-center justify-center flex-shrink-0 transition-colors">
-                      <Icon.Document className="w-5 h-5 text-[#868e96] group-hover:text-[#00a651] transition-colors" />
+                      <Icon.Document className="w-5 h-5 text-[#868e96] group-hover:text-[#1a472a] transition-colors" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[#495057] truncate group-hover:text-[#00a651] transition-colors">
+                      <p className="text-sm font-medium text-[#495057] truncate group-hover:text-[#1a472a] transition-colors">
                         {att.name}
                       </p>
                       <p className="text-xs text-[#adb5bd]">
                         {formatBytes(att.size)} • {new Date(att.uploadedAt).toLocaleDateString('es-PE')}
                       </p>
                     </div>
-                    <Icon.Search className="w-4 h-4 text-[#adb5bd] group-hover:text-[#00a651] transition-colors flex-shrink-0" />
+                    <Icon.Search className="w-4 h-4 text-[#adb5bd] group-hover:text-[#1a472a] transition-colors flex-shrink-0" />
                   </a>
                 ))}
               </div>
@@ -313,9 +313,9 @@ export default async function DocumentDetailPage({ params }: PageProps) {
                   >
                     <div
                       className="h-1 rounded-full mb-2"
-                      style={{ backgroundColor: rel.category.color || '#00a651' }}
+                      style={{ backgroundColor: rel.category.color || '#1a472a' }}
                     />
-                    <p className="text-sm font-medium text-[#495057] group-hover:text-[#00a651] transition-colors line-clamp-2">
+                    <p className="text-sm font-medium text-[#495057] group-hover:text-[#1a472a] transition-colors line-clamp-2">
                       {rel.title}
                     </p>
                     <p className="text-xs text-[#adb5bd] flex items-center gap-1 mt-1">

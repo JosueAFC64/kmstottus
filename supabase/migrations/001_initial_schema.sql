@@ -933,15 +933,15 @@ UNION ALL
 SELECT 'Compras', 'LOG-COMPRAS', id FROM departments WHERE code = 'LOG';
 
 -- Categorías de documentos
-INSERT INTO categories (name, slug, description, icon, color, order_index) VALUES
-('Manuales Operativos', 'manuales-operativos', 'Procedimientos y manuales de operación', '📋', '#00a651', 1),
-('Políticas', 'politicas', 'Políticas corporativas y regulaciones', '📜', '#f7941d', 2),
-('Procesos', 'procesos', 'Descripción de procesos de negocio', '🔄', '#00b4d8', 3),
-('Capacitación', 'capacitacion', 'Materiales de entrenamiento', '🎓', '#6610f2', 4),
-('Seguridad', 'seguridad', 'Protocolos de seguridad', '🛡️', '#dc3545', 5),
-('Recursos Humanos', 'recursos-humanos', 'Políticas y procedimientos de RRHH', '👥', '#e83e8c', 6),
-('Tecnología', 'tecnologia', 'Guías técnicas y de sistemas', '💻', '#20c997', 7),
-('Mejores Prácticas', 'mejores-practicas', 'Best practices y tips', '⭐', '#fd7e14', 8);
+INSERT INTO categories (name, slug, description, color, order_index) VALUES
+('Manuales Operativos', 'manuales-operativos', 'Procedimientos y manuales de operación', '#00a651', 1),
+('Políticas', 'politicas', 'Políticas corporativas y regulaciones', '#f7941d', 2),
+('Procesos', 'procesos', 'Descripción de procesos de negocio', '#00b4d8', 3),
+('Capacitación', 'capacitacion', 'Materiales de entrenamiento', '#6610f2', 4),
+('Seguridad', 'seguridad', 'Protocolos de seguridad', '#dc3545', 5),
+('Recursos Humanos', 'recursos-humanos', 'Políticas y procedimientos de RRHH', '#e83e8c', 6),
+('Tecnología', 'tecnologia', 'Guías técnicas y de sistemas', '#20c997', 7),
+('Mejores Prácticas', 'mejores-practicas', 'Best practices y tips', '#fd7e14', 8);
 
 -- Categorías de lecciones aprendidas
 INSERT INTO lesson_categories (name, description, color, order_index) VALUES

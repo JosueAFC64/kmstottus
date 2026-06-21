@@ -71,11 +71,11 @@ export default function RegisterPage() {
       <div className="w-full max-w-2xl">
         {/* Logo */}
         <div className="flex items-center justify-center gap-3 mb-6 sm:mb-8">
-          <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[#00a651] rounded-xl flex items-center justify-center shadow-sm">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[#1a472a] rounded-xl flex items-center justify-center shadow-sm">
             <Icon.Book className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
           </div>
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-[#212529]">KMS Tottus</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-[#212529]">KMS Papa Johns</h1>
             <p className="text-xs sm:text-sm text-[#868e96]">Sistema de Gestión del Conocimiento</p>
           </div>
         </div>
@@ -83,7 +83,7 @@ export default function RegisterPage() {
         <Card padding="lg">
           <div className="text-center mb-6">
             <h2 className="text-xl sm:text-2xl font-bold text-[#212529] mb-2">Crear Cuenta</h2>
-            <p className="text-sm text-[#868e96]">Únete al centro de conocimiento de Tottus</p>
+            <p className="text-sm text-[#868e96]">Únete al centro de conocimiento de Papa Johns</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -116,7 +116,7 @@ export default function RegisterPage() {
             <Input
               type="email"
               label="Correo electrónico"
-              placeholder="juan.perez@tottus.com"
+              placeholder="juan.perez@papajohns.com"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               required
@@ -161,7 +161,7 @@ export default function RegisterPage() {
 
             <div className="text-center text-sm text-[#868e96] mt-4">
               ¿Ya tienes cuenta?{' '}
-              <a href="/login" className="text-[#00a651] hover:text-[#008542] font-medium">
+              <a href="/login" className="text-[#1a472a] hover:text-[#0f2d1a] font-medium">
                 Inicia sesión aquí
               </a>
             </div>

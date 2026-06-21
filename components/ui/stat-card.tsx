@@ -21,7 +21,7 @@ export function StatCard({
   color = "green",
 }: StatCardProps) {
   const colorStyles = {
-    green: "bg-green-50 text-[#00a651]",
+    green: "bg-green-50 text-[#1a472a]",
     orange: "bg-orange-50 text-[#f7941d]",
     blue: "bg-blue-50 text-[#00b4d8]",
     gray: "bg-gray-50 text-[#868e96]",
@@ -40,7 +40,7 @@ export function StatCard({
             <div className="flex items-center mt-2">
               <span
                 className={`text-sm font-medium ${
-                  trend.isPositive ? "text-[#00a651]" : "text-[#dc3545]"
+                  trend.isPositive ? "text-[#1a472a]" : "text-[#dc3545]"
                 }`}
               >
                 {trend.isPositive ? "↑" : "↓"} {Math.abs(trend.value)}%

@@ -1,4 +1,4 @@
-# KMS Tottus Perú - Documentación de Base de Datos
+# KMS Papa Johns Perú - Documentación de Base de Datos
 
 ## 1. Visión General
 

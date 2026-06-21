@@ -18,7 +18,7 @@ function getOptionalEnvVar(name: string, defaultValue: string = ''): string {
 export const env = {
   // Supabase
   SUPABASE_URL: getOptionalEnvVar('NEXT_PUBLIC_SUPABASE_URL'),
-  SUPABASE_ANON_KEY: getOptionalEnvVar('NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY'),
+  SUPABASE_ANON_KEY: getOptionalEnvVar('NEXT_PUBLIC_SUPABASE_ANON_KEY') || getOptionalEnvVar('NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY'),
   SUPABASE_SERVICE_ROLE_KEY: getOptionalEnvVar('SUPABASE_SERVICE_ROLE_KEY'),
 
   // App
@@ -34,7 +34,7 @@ export function validateSupabaseConfig(): { isValid: boolean; error?: string } {
     return { isValid: false, error: 'NEXT_PUBLIC_SUPABASE_URL no está configurada' };
   }
   if (!env.SUPABASE_ANON_KEY) {
-    return { isValid: false, error: 'NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY no está configurada' };
+    return { isValid: false, error: 'NEXT_PUBLIC_SUPABASE_ANON_KEY no está configurada' };
   }
   return { isValid: true };
 }

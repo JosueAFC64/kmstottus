@@ -8,11 +8,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Button, Input, Card, Badge, Icon } from '@/components/ui';
+import { Button, Input, Card, Badge, Icon, FileUpload, type UploadedFile } from '@/components/ui';
 import type {
   DocumentFormData,
   DocumentCategory,
-  Attachment,
   ContentType,
   AccessLevel,
 } from '@/types/documents';
@@ -53,8 +52,6 @@ export function DocumentForm({ documentId, initialData, categories, allTags }: D
   const [showTagSuggestions, setShowTagSuggestions] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
-  const [attachmentName, setAttachmentName] = useState('');
-  const [attachmentUrl, setAttachmentUrl] = useState('');
 
   const filteredSuggestions = allTags.filter(
     (t) =>
@@ -75,23 +72,17 @@ export function DocumentForm({ documentId, initialData, categories, allTags }: D
     setForm((f) => ({ ...f, tags: f.tags.filter((t) => t !== tag) }));
   };
 
-  const addAttachment = () => {
-    if (!attachmentName.trim()) return;
-    const att: Attachment = {
-      id: `att-${Date.now()}`,
-      name: attachmentName.trim(),
-      url: attachmentUrl.trim() || '#',
-      size: 0,
-      type: 'application/octet-stream',
-      uploadedAt: new Date().toISOString(),
-    };
-    setForm((f) => ({ ...f, attachments: [...f.attachments, att] }));
-    setAttachmentName('');
-    setAttachmentUrl('');
-  };
-
-  const removeAttachment = (id: string) => {
-    setForm((f) => ({ ...f, attachments: f.attachments.filter((a) => a.id !== id) }));
+  const handleFilesChange = (files: UploadedFile[]) => {
+    // Convertir UploadedFile a Attachment para el formulario
+    const attachments = files.map(f => ({
+      id: f.id,
+      name: f.name,
+      url: f.url,
+      size: f.size,
+      type: f.type,
+      uploadedAt: f.uploadedAt,
+    }));
+    setForm((f) => ({ ...f, attachments }));
   };
 
   const validate = (): boolean => {
@@ -178,7 +169,7 @@ export function DocumentForm({ documentId, initialData, categories, allTags }: D
           <select
             value={form.categoryId}
             onChange={(e) => setForm((f) => ({ ...f, categoryId: e.target.value }))}
-            className={`w-full h-10 px-3 border rounded-lg text-sm text-[#495057] bg-white focus:ring-2 focus:ring-[#00a651] focus:border-transparent ${
+            className={`w-full h-10 px-3 border rounded-lg text-sm text-[#495057] bg-white focus:ring-2 focus:ring-[#1a472a] focus:border-transparent ${
               errors.categoryId ? 'border-[#dc3545]' : 'border-[#dee2e6]'
             }`}
           >
@@ -205,7 +196,7 @@ export function DocumentForm({ documentId, initialData, categories, allTags }: D
           placeholder="Breve descripción del documento (se muestra en la lista del repositorio)"
           value={form.summary}
           onChange={(e) => setForm((f) => ({ ...f, summary: e.target.value }))}
-          className="w-full px-3 py-2 border border-[#dee2e6] rounded-lg text-sm text-[#495057] bg-white focus:ring-2 focus:ring-[#00a651] focus:border-transparent resize-none placeholder:text-[#adb5bd]"
+          className="w-full px-3 py-2 border border-[#dee2e6] rounded-lg text-sm text-[#495057] bg-white focus:ring-2 focus:ring-[#1a472a] focus:border-transparent resize-none placeholder:text-[#adb5bd]"
         />
       </div>
 
@@ -232,7 +223,7 @@ export function DocumentForm({ documentId, initialData, categories, allTags }: D
           }
           value={form.content}
           onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))}
-          className={`w-full px-3 py-2 border rounded-lg text-sm text-[#495057] bg-white font-mono focus:ring-2 focus:ring-[#00a651] focus:border-transparent resize-y placeholder:text-[#adb5bd] ${
+          className={`w-full px-3 py-2 border rounded-lg text-sm text-[#495057] bg-white font-mono focus:ring-2 focus:ring-[#1a472a] focus:border-transparent resize-y placeholder:text-[#adb5bd] ${
             errors.content ? 'border-[#dc3545]' : 'border-[#dee2e6]'
           }`}
         />
@@ -256,8 +247,8 @@ export function DocumentForm({ documentId, initialData, categories, allTags }: D
                 onClick={() => setForm((f) => ({ ...f, accessLevel: level }))}
                 className={`px-3 py-1.5 rounded-lg text-sm border transition-colors ${
                   form.accessLevel === level
-                    ? 'bg-[#00a651] text-white border-[#00a651]'
-                    : 'border-[#dee2e6] text-[#495057] hover:border-[#00a651] hover:text-[#00a651]'
+                    ? 'bg-[#1a472a] text-white border-[#1a472a]'
+                    : 'border-[#dee2e6] text-[#495057] hover:border-[#1a472a] hover:text-[#1a472a]'
                 }`}
               >
                 {ACCESS_LEVEL_LABELS[level]}
@@ -268,55 +259,61 @@ export function DocumentForm({ documentId, initialData, categories, allTags }: D
 
         <div>
           <label className="text-sm font-medium text-[#495057] mb-1.5 block">Etiquetas</label>
-          <div className="relative">
-            <Input
-              placeholder="Agregar etiqueta..."
-              value={tagInput}
-              onChange={(e) => {
-                setTagInput(e.target.value);
-                setShowTagSuggestions(true);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  if (tagInput.trim()) addTag(tagInput);
-                }
-                if (e.key === ',') {
-                  e.preventDefault();
-                  if (tagInput.trim()) addTag(tagInput.replace(',', ''));
-                }
-              }}
-              onFocus={() => setShowTagSuggestions(true)}
-              onBlur={() => setTimeout(() => setShowTagSuggestions(false), 150)}
-              className="text-sm"
-            />
-            {showTagSuggestions && filteredSuggestions.length > 0 && (
-              <Card padding="sm" className="absolute top-full mt-1 left-0 right-0 z-20 shadow-lg border border-[#dee2e6] max-h-40 overflow-y-auto">
-                {filteredSuggestions.slice(0, 8).map((t) => (
+          
+          {/* Input para buscar/crear etiquetas */}
+          <Input
+            placeholder="Buscar o crear etiqueta..."
+            value={tagInput}
+            onChange={(e) => {
+              setTagInput(e.target.value);
+              setShowTagSuggestions(true);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                if (tagInput.trim()) addTag(tagInput);
+              }
+              if (e.key === ',') {
+                e.preventDefault();
+                if (tagInput.trim()) addTag(tagInput.replace(',', ''));
+              }
+            }}
+            onFocus={() => setShowTagSuggestions(true)}
+            onBlur={() => setTimeout(() => setShowTagSuggestions(false), 150)}
+            className="text-sm"
+          />
+          
+          {/* Panel de sugerencias como burbujas */}
+          {showTagSuggestions && filteredSuggestions.length > 0 && (
+            <Card padding="sm" className="mt-1 shadow-lg border border-[#dee2e6]">
+              <div className="flex flex-wrap gap-1 max-h-48 overflow-y-auto">
+                {filteredSuggestions.map((t) => (
                   <button
                     key={t}
                     type="button"
                     onMouseDown={() => addTag(t)}
-                    className="w-full text-left px-3 py-1.5 text-sm text-[#495057] hover:bg-[#f8f9fa] rounded"
+                    className="px-2.5 py-1.5 text-xs rounded-full border border-[#dee2e6] text-[#495057] hover:bg-[#f8f9fa] hover:border-[#1a472a] hover:text-[#1a472a] transition-colors"
                   >
                     {t}
                   </button>
                 ))}
-              </Card>
-            )}
-          </div>
+              </div>
+            </Card>
+          )}
+          
+          {/* Etiquetas seleccionadas */}
           {form.tags.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-2">
               {form.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="flex items-center gap-1 px-2 py-1 bg-[#00a651]/10 text-[#008542] text-xs rounded-full"
+                  className="flex items-center gap-1 px-2 py-1 bg-[#1a472a] text-white text-xs rounded-full"
                 >
                   {tag}
                   <button
                     type="button"
                     onClick={() => removeTag(tag)}
-                    className="hover:text-[#dc3545] transition-colors"
+                    className="hover:text-[#ffb3b3] transition-colors"
                   >
                     <Icon.Close className="w-3 h-3" />
                   </button>
@@ -336,7 +333,7 @@ export function DocumentForm({ documentId, initialData, categories, allTags }: D
               type="checkbox"
               checked={form.isFeatured}
               onChange={(e) => setForm((f) => ({ ...f, isFeatured: e.target.checked }))}
-              className="rounded text-[#00a651] focus:ring-[#00a651]"
+              className="rounded text-[#1a472a] focus:ring-[#1a472a]"
             />
             <span className="text-sm text-[#495057] flex items-center gap-1">
               <Icon.Star className="w-4 h-4 text-[#f7941d]" />
@@ -348,7 +345,7 @@ export function DocumentForm({ documentId, initialData, categories, allTags }: D
               type="checkbox"
               checked={form.isPinned}
               onChange={(e) => setForm((f) => ({ ...f, isPinned: e.target.checked }))}
-              className="rounded text-[#00a651] focus:ring-[#00a651]"
+              className="rounded text-[#1a472a] focus:ring-[#1a472a]"
             />
             <span className="text-sm text-[#495057]">Fijar en la parte superior</span>
           </label>
@@ -361,55 +358,19 @@ export function DocumentForm({ documentId, initialData, categories, allTags }: D
           <Icon.Document className="w-4 h-4 text-[#868e96]" />
           Archivos adjuntos
         </h3>
-        <div className="flex gap-2 mb-3">
-          <Input
-            placeholder="Nombre del archivo (PDF, PPTX...)"
-            value={attachmentName}
-            onChange={(e) => setAttachmentName(e.target.value)}
-            className="flex-1 text-sm"
-          />
-          <Input
-            placeholder="URL (opcional)"
-            value={attachmentUrl}
-            onChange={(e) => setAttachmentUrl(e.target.value)}
-            className="flex-1 text-sm"
-          />
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={addAttachment}
-            disabled={!attachmentName.trim()}
-            className="flex-shrink-0"
-          >
-            <Icon.Plus className="w-4 h-4" />
-          </Button>
-        </div>
-        {form.attachments.length > 0 && (
-          <div className="space-y-2">
-            {form.attachments.map((att) => (
-              <div
-                key={att.id}
-                className="flex items-center justify-between p-2 bg-[#f8f9fa] rounded-lg border border-[#dee2e6]"
-              >
-                <div className="flex items-center gap-2 min-w-0">
-                  <Icon.Document className="w-4 h-4 text-[#868e96] flex-shrink-0" />
-                  <span className="text-sm text-[#495057] truncate">{att.name}</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => removeAttachment(att.id)}
-                  className="p-1 text-[#adb5bd] hover:text-[#dc3545] transition-colors flex-shrink-0"
-                >
-                  <Icon.Close className="w-4 h-4" />
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-        {form.attachments.length === 0 && (
-          <p className="text-xs text-[#adb5bd]">Sin archivos adjuntos. Agrega PDFs, presentaciones o documentos de apoyo.</p>
-        )}
+        <FileUpload
+          files={form.attachments.map(a => ({
+            id: a.id,
+            name: a.name,
+            url: a.url,
+            size: a.size,
+            type: a.type,
+            uploadedAt: a.uploadedAt,
+          }))}
+          onFilesChange={handleFilesChange}
+          maxSizeMB={100}
+          accept="application/pdf,video/mp4,video/quicktime,image/*,.doc,.docx,.xls,.xlsx,.txt"
+        />
       </Card>
 
       {/* Acciones */}

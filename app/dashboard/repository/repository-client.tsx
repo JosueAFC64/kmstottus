@@ -159,7 +159,7 @@ export function RepositoryClient({
             <Icon.Cog className="w-4 h-4" />
             Filtros
             {hasFilters && (
-              <span className="w-5 h-5 bg-white text-[#00a651] text-xs rounded-full flex items-center justify-center font-bold">
+              <span className="w-5 h-5 bg-white text-[#1a472a] text-xs rounded-full flex items-center justify-center font-bold">
                 {[
                   selectedCategory ? 1 : 0,
                   selectedStatus ? 1 : 0,
@@ -189,13 +189,13 @@ export function RepositoryClient({
                       onClick={() => setOpenFilterTab(tab.key)}
                       className={`flex-1 px-3 py-2.5 text-xs font-medium transition-colors border-b-2 ${
                         openFilterTab === tab.key
-                          ? 'border-[#00a651] text-[#00a651]'
+                          ? 'border-[#1a472a] text-[#1a472a]'
                           : 'border-transparent text-[#868e96] hover:text-[#495057]'
                       }`}
                     >
                       {tab.label}
                       {tab.key === 'tags' && selectedTags.length > 0 && (
-                        <span className="ml-1 w-4 h-4 bg-[#00a651] text-white text-[10px] rounded-full inline-flex items-center justify-center">
+                        <span className="ml-1 w-4 h-4 bg-[#1a472a] text-white text-[10px] rounded-full inline-flex items-center justify-center">
                           {selectedTags.length}
                         </span>
                       )}
@@ -211,7 +211,7 @@ export function RepositoryClient({
                         onClick={() => { setSelectedCategory(''); setFilterOpen(false); }}
                         className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                           !selectedCategory
-                            ? 'bg-[#00a651] text-white'
+                            ? 'bg-[#1a472a] text-white'
                             : 'text-[#495057] hover:bg-[#f8f9fa]'
                         }`}
                       >
@@ -223,7 +223,7 @@ export function RepositoryClient({
                           onClick={() => { setSelectedCategory(cat.slug === selectedCategory ? '' : cat.slug); setFilterOpen(false); }}
                           className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors flex items-center gap-2 ${
                             selectedCategory === cat.slug
-                              ? 'bg-[#00a651] text-white'
+                              ? 'bg-[#1a472a] text-white'
                               : 'text-[#495057] hover:bg-[#f8f9fa]'
                           }`}
                         >
@@ -246,7 +246,7 @@ export function RepositoryClient({
                           onClick={() => { setSelectedStatus(opt.value as DocumentStatus | ''); setFilterOpen(false); }}
                           className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                             selectedStatus === opt.value
-                              ? 'bg-[#00a651] text-white'
+                              ? 'bg-[#1a472a] text-white'
                               : 'text-[#495057] hover:bg-[#f8f9fa]'
                           }`}
                         >
@@ -273,8 +273,8 @@ export function RepositoryClient({
                             onClick={() => toggleTag(tag)}
                             className={`px-2 py-1 rounded-full text-xs transition-colors border ${
                               selectedTags.includes(tag)
-                                ? 'bg-[#00a651] text-white border-[#00a651]'
-                                : 'text-[#495057] border-[#dee2e6] hover:border-[#00a651] hover:text-[#00a651]'
+                                ? 'bg-[#1a472a] text-white border-[#1a472a]'
+                                : 'text-[#495057] border-[#dee2e6] hover:border-[#1a472a] hover:text-[#1a472a]'
                             }`}
                           >
                             {tag}
@@ -293,7 +293,7 @@ export function RepositoryClient({
                   <div className="p-2 border-t border-[#dee2e6]">
                     <button
                       onClick={() => { clearFilters(); setFilterOpen(false); }}
-                      className="w-full text-center text-xs text-[#00a651] hover:underline py-1"
+                      className="w-full text-center text-xs text-[#1a472a] hover:underline py-1"
                     >
                       Limpiar todos los filtros
                     </button>
@@ -307,7 +307,7 @@ export function RepositoryClient({
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="h-10 px-3 pr-8 border border-[#dee2e6] rounded-lg text-sm text-[#495057] bg-white focus:ring-2 focus:ring-[#00a651] focus:border-transparent"
+          className="h-10 px-3 pr-8 border border-[#dee2e6] rounded-lg text-sm text-[#495057] bg-white focus:ring-2 focus:ring-[#1a472a] focus:border-transparent"
         >
           <option value="updated_at">Más recientes</option>
           <option value="created_at">Fecha de creación</option>
@@ -383,7 +383,7 @@ export function RepositoryClient({
               }}
               className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
                 data.page === i + 1
-                  ? 'bg-[#00a651] text-white'
+                  ? 'bg-[#1a472a] text-white'
                   : 'bg-white text-[#495057] hover:bg-[#f1f3f5] border border-[#dee2e6]'
               }`}
             >
@@ -412,11 +412,11 @@ function DocumentCard({ doc }: { doc: DocumentListItem }) {
 
   return (
     <Link href={`/dashboard/repository/${doc.id}`} className="group block">
-      <Card padding="none" className="h-full hover:shadow-md transition-shadow border border-[#dee2e6] hover:border-[#00a651]/30">
+      <Card padding="none" className="h-full hover:shadow-md transition-shadow border border-[#dee2e6] hover:border-[#1a472a]/30">
         {/* Header con categoría + badge */}
         <div
           className="h-2 rounded-t-xl"
-          style={{ backgroundColor: doc.category.color || '#00a651' }}
+          style={{ backgroundColor: doc.category.color || '#1a472a' }}
         />
         <div className="p-4 flex flex-col h-full">
           {/* Metadatos */}
@@ -424,7 +424,7 @@ function DocumentCard({ doc }: { doc: DocumentListItem }) {
             <div className="flex items-center gap-2 min-w-0">
               <span
                 className="text-xs px-2 py-0.5 rounded-full text-white font-medium flex-shrink-0"
-                style={{ backgroundColor: doc.category.color || '#00a651' }}
+                style={{ backgroundColor: doc.category.color || '#1a472a' }}
               >
                 {doc.category.name}
               </span>
@@ -445,7 +445,7 @@ function DocumentCard({ doc }: { doc: DocumentListItem }) {
           </div>
 
           {/* Título */}
-          <h3 className="font-semibold text-[#212529] text-sm mb-1.5 line-clamp-2 group-hover:text-[#00a651] transition-colors">
+          <h3 className="font-semibold text-[#212529] text-sm mb-1.5 line-clamp-2 group-hover:text-[#1a472a] transition-colors">
             {doc.title}
           </h3>
 
@@ -459,7 +459,7 @@ function DocumentCard({ doc }: { doc: DocumentListItem }) {
           {/* Tags */}
           {doc.tags.length > 0 && (
             <div className="flex flex-wrap gap-1 mb-3">
-              {doc.tags.slice(0, 3).map((tag) => (
+              {doc.tags.slice(0, 2).map((tag) => (
                 <span
                   key={tag}
                   className="text-xs px-2 py-0.5 bg-[#f1f3f5] text-[#868e96] rounded-full"
@@ -467,8 +467,8 @@ function DocumentCard({ doc }: { doc: DocumentListItem }) {
                   {tag}
                 </span>
               ))}
-              {doc.tags.length > 3 && (
-                <span className="text-xs text-[#adb5bd]">+{doc.tags.length - 3}</span>
+              {doc.tags.length > 2 && (
+                <span className="text-xs text-[#adb5bd]">+{doc.tags.length - 2}</span>
               )}
             </div>
           )}

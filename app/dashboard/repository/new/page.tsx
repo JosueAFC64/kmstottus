@@ -25,7 +25,7 @@ export default async function NewDocumentPage() {
         </Link>
         <div>
           <h1 className="text-xl sm:text-2xl font-bold text-[#212529] flex items-center gap-2">
-            <Icon.Document className="w-7 h-7 text-[#00a651]" />
+            <Icon.Document className="w-7 h-7 text-[#1a472a]" />
             Nuevo Documento
           </h1>
           <p className="text-sm text-[#868e96] mt-1">

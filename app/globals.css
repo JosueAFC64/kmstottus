@@ -1,39 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  /* Tottus Brand Colors */
-  --tottus-primary: #00a651;
-  --tottus-primary-dark: #008542;
-  --tottus-secondary: #f7941d;
-  --tottus-secondary-dark: #e8851a;
-  --tottus-accent: #00b4d8;
-  
+  /* Papa Johns Brand Colors */
+  --pj-primary: #1a472a;
+  --pj-primary-dark: #0f2d1a;
+  --pj-primary-light: #2d5a3d;
+  --pj-secondary: #e31837;
+  --pj-secondary-dark: #c41430;
+  --pj-accent: #ffb500;
+
   /* Neutrals */
-  --tottus-neutral-50: #f8f9fa;
-  --tottus-neutral-100: #f1f3f5;
-  --tottus-neutral-200: #e9ecef;
-  --tottus-neutral-300: #dee2e6;
-  --tottus-neutral-400: #ced4da;
-  --tottus-neutral-500: #adb5bd;
-  --tottus-neutral-600: #868e96;
-  --tottus-neutral-700: #495057;
-  --tottus-neutral-800: #343a40;
-  --tottus-neutral-900: #212529;
-  
+  --pj-neutral-50: #f8f9fa;
+  --pj-neutral-100: #f1f3f5;
+  --pj-neutral-200: #e9ecef;
+  --pj-neutral-300: #dee2e6;
+  --pj-neutral-400: #ced4da;
+  --pj-neutral-500: #adb5bd;
+  --pj-neutral-600: #868e96;
+  --pj-neutral-700: #495057;
+  --pj-neutral-800: #343a40;
+  --pj-neutral-900: #212529;
+
   /* Semantic */
-  --tottus-success: #00a651;
-  --tottus-warning: #f7941d;
-  --tottus-error: #dc3545;
-  --tottus-info: #00b4d8;
-  
+  --pj-success: #1a472a;
+  --pj-warning: #ffb500;
+  --pj-error: #e31837;
+  --pj-info: #0077b6;
+
   /* Background */
-  --tottus-bg-primary: #ffffff;
-  --tottus-bg-secondary: #f8f9fa;
-  --tottus-bg-tertiary: #e9ecef;
-  
+  --pj-bg-primary: #ffffff;
+  --pj-bg-secondary: #f8f9fa;
+  --pj-bg-tertiary: #e9ecef;
+
   /* Border */
-  --tottus-border: #dee2e6;
-  --tottus-border-light: #f1f3f5;
+  --pj-border: #dee2e6;
+  --pj-border-light: #f1f3f5;
 }
 
 * {
@@ -49,8 +50,8 @@ body {
 
 body {
   line-height: 1.6;
-  color: var(--tottus-neutral-900);
-  background: var(--tottus-bg-secondary);
+  color: var(--pj-neutral-900);
+  background: var(--pj-bg-secondary);
 }
 
 input:not([type="checkbox"]):not([type="radio"]) {
@@ -64,16 +65,16 @@ input:not([type="checkbox"]):not([type="radio"]) {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--tottus-neutral-100);
+  background: var(--pj-neutral-100);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--tottus-neutral-400);
+  background: var(--pj-neutral-400);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--tottus-neutral-500);
+  background: var(--pj-neutral-500);
 }
 
 /* Utility classes */
@@ -90,4 +91,3 @@ input:not([type="checkbox"]):not([type="radio"]) {
   padding-top: 64px;
   min-height: 100vh;
 }
-

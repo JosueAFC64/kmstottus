@@ -74,11 +74,44 @@ export async function POST(request: NextRequest) {
       isPinned: body.isPinned ?? false,
     };
 
-    // En producción vendría de la sesión del usuario
-    const authorId = body.authorId || 'auth-maria';
-    const authorName = body.authorName || 'María García';
-    const authorEmail = body.authorEmail || 'maria.garcia@tottus.com';
+    // Intentar obtener el usuario de la sesión de Supabase
+    let authorId = body.authorId || '';
+    let authorName = body.authorName || 'Usuario Demo';
+    let authorEmail = body.authorEmail || 'demo@tottus.com';
     const authorPosition = body.authorPosition;
+
+    // Si no hay authorId, intentar obtenerlo de la sesión
+    if (!authorId) {
+      try {
+        const { createClient } = await import('@/lib/supabase/server');
+        const supabase = await createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (user) {
+          authorId = user.id;
+          authorEmail = user.email || authorEmail;
+          // Intentar obtener el nombre del profile
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('first_name, last_name')
+            .eq('user_id', user.id)
+            .maybeSingle();
+          
+          if (profile) {
+            authorName = `${profile.first_name} ${profile.last_name}`.trim();
+          }
+        }
+      } catch (sessionError) {
+        console.warn('[POST /api/documents] No se pudo obtener sesión:', sessionError);
+      }
+    }
+
+    // Si no tenemos authorId válido, usar un ID de desarrollo
+    if (!authorId || authorId === 'auth-maria') {
+      authorId = '00000000-0000-0000-0000-000000000001';
+      authorName = body.authorName || 'Usuario Demo';
+      authorEmail = body.authorEmail || 'demo@tottus.com';
+    }
 
     const doc = await createDocument(data, authorId, authorName, authorEmail, authorPosition);
     return NextResponse.json(doc, { status: 201 });

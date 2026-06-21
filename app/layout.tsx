@@ -16,10 +16,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "KMS Tottus Perú - Sistema de Gestión del Conocimiento",
-  description: "Centro de conocimiento organizacional para Tottus Perú.",
+  title: "KMS Papa Johns Perú - Sistema de Gestión del Conocimiento",
+  description: "Centro de conocimiento organizacional para Papa Johns Perú.",
   icons: {
-    icon: "/tottus.svg",
+    icon: "/papajohns.svg",
   },
 };
 

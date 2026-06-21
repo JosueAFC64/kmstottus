@@ -20,12 +20,12 @@ export default async function RepositoryPage() {
       {/* Header de la página */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-[#212529] flex items-center gap-2">
-            <Icon.Repository className="w-7 h-7 text-[#00a651]" />
+            <h1 className="text-xl sm:text-2xl font-bold text-[#212529] flex items-center gap-2">
+            <Icon.Repository className="w-7 h-7 text-[#1a472a]" />
             Repositorio de Conocimiento
           </h1>
           <p className="text-sm text-[#868e96] mt-1">
-            Manuales, políticas, procedimientos y guías de Tottus Perú
+            Manuales, políticas, procedimientos y guías de Papa Johns Perú
           </p>
         </div>
       </div>

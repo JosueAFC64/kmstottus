@@ -29,7 +29,7 @@ export function Input({
           </div>
         )}
         <input
-          className={`w-full px-4 py-2.5 rounded-lg border border-[#dee2e6] bg-white text-[#212529] placeholder-[#adb5bd] focus:outline-none focus:ring-2 focus:ring-[#00a651] focus:border-transparent transition-colors ${
+          className={`w-full px-4 py-2.5 rounded-lg border border-[#dee2e6] bg-white text-[#212529] placeholder-[#adb5bd] focus:outline-none focus:ring-2 focus:ring-[#1a472a] focus:border-transparent transition-colors ${
             icon ? "pl-10" : ""
           } ${error ? "border-[#dc3545]" : ""} ${className}`}
           {...props}
@@ -61,7 +61,7 @@ export function Textarea({
         </label>
       )}
       <textarea
-        className={`w-full px-4 py-2.5 rounded-lg border border-[#dee2e6] bg-white text-[#212529] placeholder-[#adb5bd] focus:outline-none focus:ring-2 focus:ring-[#00a651] focus:border-transparent transition-colors resize-none ${error ? "border-[#dc3545]" : ""} ${className}`}
+        className={`w-full px-4 py-2.5 rounded-lg border border-[#dee2e6] bg-white text-[#212529] placeholder-[#adb5bd] focus:outline-none focus:ring-2 focus:ring-[#1a472a] focus:border-transparent transition-colors resize-none ${error ? "border-[#dc3545]" : ""} ${className}`}
         {...props}
       />
       {error && (

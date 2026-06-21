@@ -124,11 +124,11 @@ export function Sidebar({ user }: SidebarProps) {
       <div className="h-16 flex items-center justify-between px-6 border-b border-[#dee2e6] flex-shrink-0">
         <Link href="/dashboard" className="flex items-center gap-3 min-w-0" onClick={close}>
           <div className="w-10 h-10 bg-none rounded-lg flex items-center justify-center flex-shrink-0">
-            <Image src="/tottus.svg" alt="Tottus" width={24} height={24}/>
+            <Image src="/papajohns.svg" alt="Papa Johns" width={24} height={24}/>
           </div>
           <div className="min-w-0">
             <h1 className="font-bold text-[#212529] text-lg leading-tight truncate">KMS</h1>
-            <p className="text-xs text-[#868e96] truncate">Tottus Perú</p>
+            <p className="text-xs text-[#868e96] truncate">Papa Johns Perú</p>
           </div>
         </Link>
         {/* Botón cerrar solo en móvil */}
@@ -167,7 +167,7 @@ export function Sidebar({ user }: SidebarProps) {
                       onClick={close}
                       className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
                         isActive(item.href)
-                          ? "bg-[#00a651] text-white"
+                          ? "bg-[#1a472a] text-white"
                           : "text-[#495057] hover:bg-[#f1f3f5]"
                       }`}
                     >
