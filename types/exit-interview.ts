@@ -14,7 +14,7 @@ export type InterviewStatus =
 export type InterviewType = 'in_person' | 'virtual' | 'phone';
 
 // Tipos de respuesta
-export type AnswerType = 'text' | 'rating' | 'multiple_choice' | 'yes_no';
+export type AnswerType = 'text' | 'textarea' | 'rating' | 'multiple_choice' | 'yes_no';
 
 // Niveles de confianza
 export type ConfidenceLevel = 'high' | 'medium' | 'low';

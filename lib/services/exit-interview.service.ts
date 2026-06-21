@@ -504,7 +504,7 @@ export async function getInterviewFindings(interviewId: string): Promise<Intervi
   const mainTopics = [...new Set(
     responsesWithKnowledge
       .map((r) => r.knowledgeCategory)
-      .filter(Boolean)
+      .filter((x): x is string => Boolean(x))
   )];
 
   // Extraer riesgos (respuestas que mencionan problemas)
@@ -512,7 +512,7 @@ export async function getInterviewFindings(interviewId: string): Promise<Intervi
     .filter((r) => r.knowledgeCategory?.toLowerCase().includes('riesgo') || 
                    r.knowledgeCategory?.toLowerCase().includes('risk'))
     .map((r) => r.extractedContent || r.answer || '')
-    .filter(Boolean);
+    .filter((x): x is string => Boolean(x));
 
   // Extraer lecciones aprendidas
   const lessonsLearned = responsesWithKnowledge
@@ -521,7 +521,7 @@ export async function getInterviewFindings(interviewId: string): Promise<Intervi
                    r.knowledgeCategory?.toLowerCase().includes('mejor') ||
                    r.knowledgeCategory?.toLowerCase().includes('best'))
     .map((r) => r.extractedContent || r.answer || '')
-    .filter(Boolean);
+    .filter((x): x is string => Boolean(x));
 
   // Recomendaciones basadas en respuestas
   const recommendations = responses
@@ -529,7 +529,7 @@ export async function getInterviewFindings(interviewId: string): Promise<Intervi
                    r.answer?.toLowerCase().includes('sugiere') ||
                    r.answer?.toLowerCase().includes('mejorar'))
     .map((r) => r.answer)
-    .filter(Boolean);
+    .filter((x): x is string => Boolean(x));
 
   return {
     totalResponses: responses.length,

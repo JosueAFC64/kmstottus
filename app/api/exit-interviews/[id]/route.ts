@@ -24,7 +24,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const { searchParams } = request.nextUrl();
+    const { searchParams } = request.nextUrl;
 
     // Si es ?responses=true, devolver respuestas
     if (searchParams.get('responses') === 'true') {

@@ -411,7 +411,7 @@ CREATE TABLE interview_responses (
     
     -- Respuesta
     answer TEXT,
-    answer_type VARCHAR(30),  -- text, rating, multiple_choice, yes_no
+    answer_type VARCHAR(30),  -- text, textarea, rating, multiple_choice, yes_no
     rating_value INTEGER,  -- Para respuestas de tipo rating (1-5)
     
     -- Para extracción de conocimiento
