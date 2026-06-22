@@ -100,10 +100,8 @@ export default function InterviewDetailClient({
 
       if (res.ok) {
         router.refresh();
-        alert('Entrevista guardada exitosamente');
       } else {
         const err = await res.json();
-        alert(err.error || 'Error al guardar');
       }
     } finally {
       setSaving(false);
@@ -147,7 +145,7 @@ export default function InterviewDetailClient({
             </div>
             <div className="text-right">
               <p className="text-xs text-[#adb5bd]">Entrevista realizada</p>
-              <p className="text-sm text-[#495057]">
+              <p className="text-sm text-[#495057]" suppressHydrationWarning>
                 {interview.completedAt ? formatDate(interview.completedAt) : 'En proceso'}
               </p>
             </div>
@@ -326,7 +324,7 @@ export default function InterviewDetailClient({
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
             <span className="text-[#868e96]">Fecha programada:</span>{' '}
-            <span className="font-medium text-[#495057]">{formatDate(interview.scheduledAt)}</span>
+            <span className="font-medium text-[#495057]" suppressHydrationWarning>{formatDate(interview.scheduledAt)}</span>
           </div>
           <div>
             <span className="text-[#868e96]">Modalidad:</span>{' '}
@@ -372,101 +370,102 @@ export default function InterviewDetailClient({
             </div>
           </div>
 
-          {/* Pregunta actual */}
-          <Card padding="lg" className="mb-6">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-10 h-10 bg-[#1a472a] text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
-                {currentQ.order}
+          {/* Pregunta actual (solo si hay pregunta que mostrar) */}
+          {currentQuestion < questions.length && (
+            <Card padding="lg" className="mb-6">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-10 h-10 bg-[#1a472a] text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">
+                  {currentQ.order}
+                </div>
+                <div className="flex-1">
+                  <p className="text-lg font-medium text-[#212529]">{currentQ.question}</p>
+                  {currentQ.required && (
+                    <span className="text-xs text-[#dc3545]">* Obligatorio</span>
+                  )}
+                </div>
               </div>
-              <div className="flex-1">
-                <p className="text-lg font-medium text-[#212529]">{currentQ.question}</p>
-                {currentQ.required && (
-                  <span className="text-xs text-[#dc3545]">* Obligatorio</span>
-                )}
-              </div>
-            </div>
 
-            {/* Input según tipo */}
-            {currentQ.type === 'text' && (
-              <input
-                type="text"
-                placeholder="Escribe tu respuesta..."
-                value={(responses.get(currentQ.order) as string) || ''}
-                onChange={(e) => handleResponse(e.target.value)}
-                className="w-full h-12 px-4 border border-[#dee2e6] rounded-lg text-[#495057] focus:ring-2 focus:ring-[#1a472a] focus:border-transparent"
-              />
-            )}
+              {/* Input según tipo */}
+              {currentQ.type === 'text' && (
+                <input
+                  type="text"
+                  placeholder="Escribe tu respuesta..."
+                  value={(responses.get(currentQ.order) as string) || ''}
+                  onChange={(e) => handleResponse(e.target.value)}
+                  className="w-full h-12 px-4 border border-[#dee2e6] rounded-lg text-[#495057] focus:ring-2 focus:ring-[#1a472a] focus:border-transparent"
+                />
+              )}
 
-            {currentQ.type === 'textarea' && (
-              <textarea
-                rows={4}
-                placeholder="Describe en detalle..."
-                value={(responses.get(currentQ.order) as string) || ''}
-                onChange={(e) => handleResponse(e.target.value)}
-                className="w-full px-4 py-3 border border-[#dee2e6] rounded-lg text-[#495057] focus:ring-2 focus:ring-[#1a472a] focus:border-transparent resize-none"
-              />
-            )}
+              {currentQ.type === 'textarea' && (
+                <textarea
+                  rows={4}
+                  placeholder="Describe en detalle..."
+                  value={(responses.get(currentQ.order) as string) || ''}
+                  onChange={(e) => handleResponse(e.target.value)}
+                  className="w-full px-4 py-3 border border-[#dee2e6] rounded-lg text-sm text-[#495057] focus:ring-2 focus:ring-[#1a472a] focus:border-transparent resize-none"
+                />
+              )}
 
-            {currentQ.type === 'rating' && (
-              <div className="flex items-center gap-2">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <button
-                    key={star}
-                    type="button"
-                    onClick={() => handleResponse(star)}
-                    className="p-2 transition-transform hover:scale-110"
-                  >
-                    <svg
-                      className={`w-10 h-10 ${responses.get(currentQ.order) === star ? 'text-[#f7941d] fill-[#f7941d]' : 'text-[#dee2e6]'}`}
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
+              {currentQ.type === 'rating' && (
+                <div className="flex items-center gap-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => handleResponse(star)}
+                      className="p-2 transition-transform hover:scale-110"
                     >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
+                      <svg
+                        className={`w-10 h-10 ${responses.get(currentQ.order) === star ? 'text-[#f7941d] fill-[#f7941d]' : 'text-[#dee2e6]'}`}
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    </button>
+                  ))}
+                  {responses.get(currentQ.order) && (
+                    <span className="ml-2 text-[#495057] font-medium">
+                      {responses.get(currentQ.order)}/5
+                    </span>
+                  )}
+                </div>
+              )}
+
+              {currentQ.type === 'yes_no' && (
+                <div className="flex gap-4">
+                  <button
+                    type="button"
+                    onClick={() => handleResponse('Sí')}
+                    className={`flex-1 py-3 rounded-lg border-2 font-medium transition-colors ${
+                      responses.get(currentQ.order) === 'Sí'
+                        ? 'border-[#28a745] bg-[#28a745]/10 text-[#28a745]'
+                        : 'border-[#dee2e6] text-[#495057] hover:border-[#28a745]'
+                    }`}
+                  >
+                    Sí
                   </button>
-                ))}
-                {responses.get(currentQ.order) && (
-                  <span className="ml-2 text-[#495057] font-medium">
-                    {responses.get(currentQ.order)}/5
-                  </span>
-                )}
-              </div>
-            )}
+                  <button
+                    type="button"
+                    onClick={() => handleResponse('No')}
+                    className={`flex-1 py-3 rounded-lg border-2 font-medium transition-colors ${
+                      responses.get(currentQ.order) === 'No'
+                        ? 'border-[#dc3545] bg-[#dc3545]/10 text-[#dc3545]'
+                        : 'border-[#dee2e6] text-[#495057] hover:border-[#dc3545]'
+                    }`}
+                  >
+                    No
+                  </button>
+                </div>
+              )}
 
-            {currentQ.type === 'yes_no' && (
-              <div className="flex gap-4">
-                <button
-                  type="button"
-                  onClick={() => handleResponse('Sí')}
-                  className={`flex-1 py-3 rounded-lg border-2 font-medium transition-colors ${
-                    responses.get(currentQ.order) === 'Sí'
-                      ? 'border-[#28a745] bg-[#28a745]/10 text-[#28a745]'
-                      : 'border-[#dee2e6] text-[#495057] hover:border-[#28a745]'
-                  }`}
-                >
-                  Sí
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleResponse('No')}
-                  className={`flex-1 py-3 rounded-lg border-2 font-medium transition-colors ${
-                    responses.get(currentQ.order) === 'No'
-                      ? 'border-[#dc3545] bg-[#dc3545]/10 text-[#dc3545]'
-                      : 'border-[#dee2e6] text-[#495057] hover:border-[#dc3545]'
-                  }`}
-                >
-                  No
-                </button>
-              </div>
-            )}
-
-            {/* Navegación */}
-            <div className="flex items-center justify-between mt-6 pt-4 border-t border-[#dee2e6]">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCurrentQuestion((p) => Math.max(0, p - 1))}
-                disabled={currentQuestion === 0}
+              {/* Navegación */}
+              <div className="flex items-center justify-between mt-6 pt-4 border-t border-[#dee2e6]">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentQuestion((p) => Math.max(0, p - 1))}
+                  disabled={currentQuestion === 0}
               >
                 <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -496,6 +495,7 @@ export default function InterviewDetailClient({
               )}
             </div>
           </Card>
+          )}
 
           {/* Resumen y cierre */}
           {currentQuestion >= questions.length && (
