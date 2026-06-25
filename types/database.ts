@@ -10,6 +10,55 @@ export type AccessLevel = 'public' | 'team' | 'department' | 'restricted';
 export type InterviewStatus = 'scheduled' | 'in_progress' | 'completed' | 'cancelled' | 'pending_knowledge_extraction';
 export type OnboardingStatus = 'not_started' | 'in_progress' | 'completed' | 'overdue';
 export type LessonPriority = 'low' | 'medium' | 'high' | 'critical';
+export type LessonStatus = 'draft' | 'published' | 'archived';
+
+export interface LessonCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  color?: string;
+  icon?: string;
+  order_index: number;
+  is_active: boolean;
+  created_at: string;
+  module_type?: string;
+}
+
+export interface LessonLearned {
+  id: string;
+  title: string;
+  slug: string;
+  summary?: string;
+  lessons: string; // "¿Qué aprendimos?"
+  situation?: string;
+  problema_identificado?: string;
+  causa_raiz?: string;
+  actions_taken?: string; // Solución implementada
+  result?: string;
+  recommendations?: string;
+  category?: string;
+  priority: LessonPriority;
+  department_id?: string;
+  area_id?: string;
+  impact_level?: LessonPriority;
+  estimated_savings?: string;
+  status: LessonStatus;
+  author_id: string;
+  reviewed_by?: string;
+  approved_by?: string;
+  tags: string[];
+  attachments: any[];
+  view_count: number;
+  applicable_areas?: string[];
+  is_repeatable: boolean;
+  project_name?: string;
+  project_id?: string;
+  created_at: string;
+  updated_at: string;
+  published_at?: string;
+  deleted_at?: string;
+}
 
 export interface Profile {
   id: string;
@@ -162,6 +211,73 @@ export interface Database {
         Row: Document;
         Insert: Omit<Document, 'id' | 'created_at' | 'updated_at' | 'view_count' | 'like_count' | 'comment_count' | 'bookmark_count'>;
         Update: Partial<Document>;
+      };
+      lessons_learned: {
+        Row: LessonLearned;
+        Insert: {
+          id?: string;
+          title: string;
+          slug: string;
+          summary?: string | null;
+          lessons: string;
+          situation?: string | null;
+          problema_identificado?: string | null;
+          causa_raiz?: string | null;
+          actions_taken?: string | null;
+          result?: string | null;
+          recommendations?: string | null;
+          category?: string | null;
+          priority?: LessonPriority;
+          area_id?: string | null;
+          impact_level?: LessonPriority | null;
+          estimated_savings?: string | null;
+          status?: LessonStatus;
+          author_id: string;
+          reviewed_by?: string | null;
+          approved_by?: string | null;
+          tags?: string[];
+          attachments?: any[];
+          applicable_areas?: string[] | null;
+          is_repeatable?: boolean;
+          project_name?: string | null;
+          project_id?: string | null;
+          published_at?: string | null;
+          deleted_at?: string | null;
+        };
+        Update: {
+          title?: string | null;
+          slug?: string | null;
+          summary?: string | null;
+          lessons?: string | null;
+          situation?: string | null;
+          problema_identificado?: string | null;
+          causa_raiz?: string | null;
+          actions_taken?: string | null;
+          result?: string | null;
+          recommendations?: string | null;
+          category?: string | null;
+          priority?: LessonPriority | null;
+          area_id?: string | null;
+          impact_level?: LessonPriority | null;
+          estimated_savings?: string | null;
+          status?: LessonStatus | null;
+          author_id?: string | null;
+          reviewed_by?: string | null;
+          approved_by?: string | null;
+          tags?: string[] | null;
+          attachments?: any[] | null;
+          applicable_areas?: string[] | null;
+          is_repeatable?: boolean | null;
+          project_name?: string | null;
+          project_id?: string | null;
+          published_at?: string | null;
+          deleted_at?: string | null;
+        };
+      };
+      lesson_categories: {
+        Row: LessonCategory;
+        Insert: Omit<LessonCategory, 'id' | 'created_at'>;
+        Update: Partial<LessonCategory>;
       };
     };
   };

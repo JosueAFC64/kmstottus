@@ -31,10 +31,6 @@ export type Permission =
   | 'faqs.delete'
   | 'experts.view'
   | 'experts.manage'
-  | 'onboarding.view'
-  | 'onboarding.create'
-  | 'onboarding.assign'
-  | 'onboarding.manage'
   | 'exit_interviews.view'
   | 'exit_interviews.create'
   | 'exit_interviews.manage'
@@ -72,10 +68,6 @@ export const ROLES: Record<UserRole, RoleDefinition> = {
       'faqs.delete',
       'experts.view',
       'experts.manage',
-      'onboarding.view',
-      'onboarding.create',
-      'onboarding.assign',
-      'onboarding.manage',
       'exit_interviews.view',
       'exit_interviews.create',
       'exit_interviews.manage',
@@ -113,8 +105,8 @@ export const ROLES: Record<UserRole, RoleDefinition> = {
   hr: {
     name: 'hr',
     displayName: 'RRHH',
-    description: 'Gestiona onboarding y entrevistas de salida',
-    homeRoute: '/dashboard/onboarding',
+    description: 'Gestiona entrevistas de salida y recursos humanos',
+    homeRoute: '/dashboard/exit-interviews',
     permissions: [
       'documents.view',
       'lessons.view',
@@ -124,10 +116,7 @@ export const ROLES: Record<UserRole, RoleDefinition> = {
       'faqs.create',
       'faqs.edit',
       'experts.view',
-      'onboarding.view',
-      'onboarding.create',
-      'onboarding.assign',
-      'onboarding.manage',
+      'experts.manage',
       'exit_interviews.view',
       'exit_interviews.create',
       'exit_interviews.manage',
@@ -151,8 +140,6 @@ export const ROLES: Record<UserRole, RoleDefinition> = {
       'faqs.create',
       'faqs.edit',
       'experts.view',
-      'onboarding.view',
-      'onboarding.assign',
       'exit_interviews.view',
       'metrics.view',
     ],
@@ -165,9 +152,11 @@ export const ROLES: Record<UserRole, RoleDefinition> = {
     permissions: [
       'documents.view',
       'lessons.view',
+      'lessons.create',
+      'lessons.edit',
       'faqs.view',
       'experts.view',
-      'onboarding.view',
+      'exit_interviews.view',
     ],
   },
 };

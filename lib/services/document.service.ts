@@ -500,10 +500,12 @@ export async function getCategories(): Promise<DocumentCategory[]> {
   try {
     const supabase = await createClient();
 
-    // Seleccionar solo las columnas que existen en la BD
+    // Solo categorías de tipo documento y activas
     const { data, error } = await supabase
       .from('categories')
       .select('id, name, slug, color, order_index')
+      .eq('module_type', 'document')
+      .eq('is_active', true)
       .order('order_index', { ascending: true });
 
     if (error || !data) {
@@ -511,7 +513,9 @@ export async function getCategories(): Promise<DocumentCategory[]> {
       // Fallback sin order_index
       const fallback = await supabase
         .from('categories')
-        .select('id, name, slug, color');
+        .select('id, name, slug, color')
+        .eq('module_type', 'document')
+        .eq('is_active', true);
       if (fallback.error || !fallback.data) {
         return [];
       }

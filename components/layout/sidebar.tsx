@@ -29,6 +29,11 @@ const navigationSections: NavSection[] = [
         href: "/dashboard",
         icon: <Icon.Dashboard className="w-5 h-5" />,
       },
+    ],
+  },
+  {
+    title: "Conocimiento",
+    items: [
       {
         label: "Repositorio",
         href: "/dashboard/repository",
@@ -36,33 +41,33 @@ const navigationSections: NavSection[] = [
         requiredPermission: "documents.view",
       },
       {
-        label: "Onboarding",
-        href: "/dashboard/onboarding",
-        icon: <Icon.Users className="w-5 h-5" />,
-        requiredPermission: "onboarding.view",
-      },
-      {
-        label: "Entrevistas de Salida",
-        href: "/dashboard/exit-interviews",
-        icon: <Icon.Chat className="w-5 h-5" />,
-        requiredPermission: "exit_interviews.view",
-      },
-    ],
-  },
-  {
-    title: "Gestión",
-    items: [
-      {
         label: "Lecciones Aprendidas",
         href: "/dashboard/lessons",
         icon: <Icon.Lightbulb className="w-5 h-5" />,
         requiredPermission: "lessons.view",
       },
       {
+        label: "Buenas Prácticas",
+        href: "/dashboard/best-practices",
+        icon: <Icon.Star className="w-5 h-5" />,
+        requiredPermission: "documents.view",
+      },
+      {
         label: "FAQs",
         href: "/dashboard/faqs",
         icon: <Icon.Question className="w-5 h-5" />,
         requiredPermission: "faqs.view",
+      },
+    ],
+  },
+  {
+    title: "Retención del Conocimiento",
+    items: [
+      {
+        label: "Entrevistas de Salida",
+        href: "/dashboard/exit-interviews",
+        icon: <Icon.Chat className="w-5 h-5" />,
+        requiredPermission: "exit_interviews.view",
       },
       {
         label: "Directorio de Expertos",
@@ -73,7 +78,7 @@ const navigationSections: NavSection[] = [
     ],
   },
   {
-    title: "Sistema",
+    title: "Análisis",
     items: [
       {
         label: "Métricas",
@@ -81,8 +86,19 @@ const navigationSections: NavSection[] = [
         icon: <Icon.Chart className="w-5 h-5" />,
         requiredPermission: "metrics.view",
       },
+    ],
+  },
+  {
+    title: "Administración",
+    items: [
       {
-        label: "Administración",
+        label: "Usuarios",
+        href: "/dashboard/admin/users",
+        icon: <Icon.Users className="w-5 h-5" />,
+        requiredPermission: "users.view",
+      },
+      {
+        label: "Configuración",
         href: "/dashboard/admin",
         icon: <Icon.Cog className="w-5 h-5" />,
         requiredPermission: "admin.full",
@@ -124,7 +140,7 @@ export function Sidebar({ user }: SidebarProps) {
       <div className="h-16 flex items-center justify-between px-6 border-b border-[#dee2e6] flex-shrink-0">
         <Link href="/dashboard" className="flex items-center gap-3 min-w-0" onClick={close}>
           <div className="w-10 h-10 bg-none rounded-lg flex items-center justify-center flex-shrink-0">
-            <Image src="/papajohns.svg" alt="Papa Johns" width={24} height={24}/>
+            <Image src="/papajohns.svg" alt="Papa Johns" width={24} height={24} />
           </div>
           <div className="min-w-0">
             <h1 className="font-bold text-[#212529] text-lg leading-tight truncate">KMS</h1>
@@ -165,11 +181,10 @@ export function Sidebar({ user }: SidebarProps) {
                       key={item.href}
                       href={item.href}
                       onClick={close}
-                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
-                        isActive(item.href)
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${isActive(item.href)
                           ? "bg-[#1a472a] text-white"
                           : "text-[#495057] hover:bg-[#f1f3f5]"
-                      }`}
+                        }`}
                     >
                       <span className={isActive(item.href) ? "text-white" : "text-[#868e96]"}>
                         {item.icon}
@@ -211,9 +226,8 @@ export function Sidebar({ user }: SidebarProps) {
     <>
       {/* Sidebar móvil: drawer con overlay */}
       <div
-        className={`lg:hidden fixed inset-0 z-50 transition-opacity duration-200 ${
-          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className={`lg:hidden fixed inset-0 z-50 transition-opacity duration-200 ${isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
         aria-hidden={!isOpen}
       >
         {/* Backdrop */}
@@ -223,9 +237,8 @@ export function Sidebar({ user }: SidebarProps) {
         />
         {/* Panel */}
         <div
-          className={`absolute inset-y-0 left-0 max-w-[280px] w-full bg-white shadow-xl transition-transform duration-200 ${
-            isOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+          className={`absolute inset-y-0 left-0 max-w-[280px] w-full bg-white shadow-xl transition-transform duration-200 ${isOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
         >
           {content}
         </div>

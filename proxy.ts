@@ -16,7 +16,6 @@ const PROTECTED_ROUTES = ['/dashboard', '/admin', '/api/protected'];
 // Rutas que requieren rol específico
 const ROLE_ROUTES: Record<string, string[]> = {
   '/admin': ['admin'],
-  '/dashboard/onboarding': ['admin', 'hr', 'supervisor'],
   '/dashboard/exit-interviews': ['admin', 'hr'],
   '/dashboard/admin': ['admin', 'knowledge_manager'],
   '/dashboard/metrics': ['admin', 'knowledge_manager', 'hr'],
