@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Icon } from '@/components/ui';
-import { TagInput } from '@/components/ui/tag-input';
+import { TagSelector } from '@/components/ui/tag-selector';
 import type { LessonCategory, LessonFormData } from '@/lib/services/lesson.service';
 
 interface LessonFormProps {
@@ -138,7 +138,7 @@ export default function LessonForm({ lessonId, initialData, categories, areas }:
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div>
       {/* Header */}
       <div className="flex items-center gap-4 mb-6">
         <Link
@@ -388,11 +388,11 @@ export default function LessonForm({ lessonId, initialData, categories, areas }:
         {/* Etiquetas */}
         <section className="bg-white rounded-lg border border-[#dee2e6] p-6">
           <h2 className="font-semibold text-[#212529] mb-4">Etiquetas</h2>
-          <TagInput
+          <TagSelector
             tags={form.tags || []}
             onChange={(tags) => handleChange('tags', tags)}
             suggestionsUrl="/api/lessons/tags"
-            placeholder="Escribe una etiqueta y presiona Enter"
+            placeholder="Buscar o crear etiqueta..."
             maxTags={10}
           />
         </section>

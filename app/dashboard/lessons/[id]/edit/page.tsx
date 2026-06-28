@@ -27,7 +27,7 @@ export default async function EditLessonPage({ params }: PageProps) {
   ]);
 
   return (
-    <div className="py-6">
+    <div>
       <LessonForm
         lessonId={id}
         initialData={{

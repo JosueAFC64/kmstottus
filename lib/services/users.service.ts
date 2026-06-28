@@ -230,8 +230,8 @@ export async function createUser(data: CreateUserData): Promise<{ userId: string
 
   const userId = authData.user.id;
 
-  // 2. Crear perfil - convertir strings vacíos a undefined
-  const { error: profileError } = await supabase.from('profiles').insert({
+  // 2. Crear o actualizar perfil (el trigger puede haberlo creado ya)
+  const { error: profileError } = await supabase.from('profiles').upsert({
     user_id: userId,
     first_name: data.firstName,
     last_name: data.lastName,
@@ -242,6 +242,9 @@ export async function createUser(data: CreateUserData): Promise<{ userId: string
     department_id: data.departmentId || undefined,
     area_id: data.areaId || undefined,
     position: data.position || undefined,
+    status: 'active',
+  }, {
+    onConflict: 'user_id',
   });
 
   if (profileError) {
@@ -250,9 +253,21 @@ export async function createUser(data: CreateUserData): Promise<{ userId: string
     throw new Error(`Error al crear perfil: ${profileError.message}`);
   }
 
-  // 3. Asignar rol
+  // 3. Obtener el ID del perfil recién creado/actualizado
+  const { data: profileData, error: profileFetchError } = await supabase
+    .from('profiles')
+    .select('id')
+    .eq('user_id', userId)
+    .single();
+
+  if (profileFetchError || !profileData) {
+    await supabase.auth.admin.deleteUser(userId);
+    throw new Error('No se pudo obtener el perfil creado');
+  }
+
+  // 4. Asignar rol usando el ID del perfil
   const { error: roleError } = await supabase.from('user_roles').insert({
-    user_id: userId, // Usa el mismo ID para profile y user_roles
+    user_id: profileData.id, // Usa el id del perfil, no el user_id de auth
     role_id: data.roleId,
   });
 

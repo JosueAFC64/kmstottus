@@ -46,7 +46,7 @@ export default async function LessonDetailPage({ params }: PageProps) {
   const statusInfo = STATUS_LABELS[lesson.status] || STATUS_LABELS.draft;
 
   return (
-    <div className="py-6 max-w-4xl mx-auto">
+    <div>
       {/* Header con navegación */}
       <div className="flex items-center gap-3 mb-6">
         <Link

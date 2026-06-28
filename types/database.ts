@@ -11,6 +11,7 @@ export type InterviewStatus = 'scheduled' | 'in_progress' | 'completed' | 'cance
 export type OnboardingStatus = 'not_started' | 'in_progress' | 'completed' | 'overdue';
 export type LessonPriority = 'low' | 'medium' | 'high' | 'critical';
 export type LessonStatus = 'draft' | 'published' | 'archived';
+export type FAQStatus = 'draft' | 'published' | 'archived';
 
 export interface LessonCategory {
   id: string;
@@ -54,6 +55,25 @@ export interface LessonLearned {
   is_repeatable: boolean;
   project_name?: string;
   project_id?: string;
+  created_at: string;
+  updated_at: string;
+  published_at?: string;
+  deleted_at?: string;
+}
+
+export interface FAQ {
+  id: string;
+  question: string;
+  answer: string;
+  category?: string;
+  tags: string[];
+  author_id?: string;
+  status: FAQStatus;
+  upvotes: number;
+  downvotes: number;
+  view_count: number;
+  display_order: number;
+  area_id?: string;
   created_at: string;
   updated_at: string;
   published_at?: string;
@@ -278,6 +298,11 @@ export interface Database {
         Row: LessonCategory;
         Insert: Omit<LessonCategory, 'id' | 'created_at'>;
         Update: Partial<LessonCategory>;
+      };
+      faqs: {
+        Row: FAQ;
+        Insert: Omit<FAQ, 'id' | 'created_at' | 'updated_at' | 'view_count' | 'upvotes' | 'downvotes'>;
+        Update: Partial<FAQ>;
       };
     };
   };

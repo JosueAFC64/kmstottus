@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input, Textarea } from '@/components/ui/input';
-import { TagInput } from '@/components/ui/tag-input';
+import { TagSelector } from '@/components/ui/tag-selector';
 import { Icon } from '@/components/ui';
 import { ProcedureSteps } from './procedure-steps';
 import type {
@@ -348,11 +348,11 @@ export function BestPracticeForm({
           <label className="block text-sm font-medium text-[#495057] mb-1.5">
             Etiquetas
           </label>
-          <TagInput
+          <TagSelector
             tags={formData.tags || []}
             onChange={(tags) => updateField('tags', tags)}
             suggestionsUrl="/api/tags"
-            placeholder="Escribe una etiqueta y presiona Enter"
+            placeholder="Buscar o crear etiqueta..."
             maxTags={MAX_TAGS}
           />
           <p className="mt-1.5 text-xs text-[#868e96]">

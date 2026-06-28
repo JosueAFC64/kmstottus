@@ -42,7 +42,7 @@ export default function BestPracticeDetailView({ practice }: BestPracticeDetailV
         const params = new URLSearchParams();
         params.set('page', '1');
         params.set('pageSize', '4');
-        
+
         const res = await fetch(`/api/best-practices?${params}`);
         const data = await res.json();
         setRelatedPractices(data.bestPractices?.filter((p: BestPracticeListItem) => p.id !== practice.id).slice(0, 3) || []);
@@ -66,7 +66,7 @@ export default function BestPracticeDetailView({ practice }: BestPracticeDetailV
       const res = await fetch(`/api/best-practices/${practice.id}`, {
         method: 'DELETE',
       });
-      
+
       if (res.ok) {
         router.push('/dashboard/best-practices');
         router.refresh();
@@ -80,7 +80,7 @@ export default function BestPracticeDetailView({ practice }: BestPracticeDetailV
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <div>
       {/* Header con acciones */}
       <div className="flex items-start justify-between mb-6">
         <div className="flex-1">
@@ -91,7 +91,7 @@ export default function BestPracticeDetailView({ practice }: BestPracticeDetailV
             <Icon.ArrowLeft className="w-4 h-4" />
             Volver a Buenas Prácticas
           </Link>
-          
+
           {/* Badges */}
           <div className="flex items-center gap-2 mb-3 flex-wrap">
             {practice.category && (
